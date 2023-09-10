@@ -1,11 +1,11 @@
 <?php
-namespace DTApi\Helpers;
+namespace App\Helpers;
 
 use Carbon\Carbon;
-use DTApi\Models\Job;
-use DTApi\Models\User;
-use DTApi\Models\Language;
-use DTApi\Models\UserMeta;
+use App\Models\Job;
+use App\Models\User;
+use App\Models\Language;
+use App\Models\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -60,6 +60,20 @@ class TeHelper
 
         return $time->format('Y-m-d H:i:s');
 
+    }
+
+    public static function convertToHoursMins($time, $format = '%02dh %02dmin')
+    {
+        if ($time < 60) {
+            return $time . 'min';
+        } elseif ($time == 60) {
+            return '1h';
+        }
+
+        $hours = floor($time / 60);
+        $minutes = ($time % 60);
+
+        return sprintf($format, $hours, $minutes);
     }
 
 }
